@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fadeElements.forEach(el => observer.observe(el));
 
     // 2. Interactive Glow, Hero Dots & Custom Cursor
-    const avatar = document.querySelector('.hero-avatar');
     const hero = document.querySelector('.hero');
     const cursor = document.querySelector('.custom-cursor');
 
@@ -49,12 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 hero.style.setProperty('--mouse-x', `${x}px`);
                 hero.style.setProperty('--mouse-y', `${y}px`);
             }
-        }
-
-        if (avatar) {
-            const vx = e.clientX / window.innerWidth;
-            const vy = e.clientY / window.innerHeight;
-            avatar.style.transform = `translate(${vx * 10 - 5}px, ${vy * 10 - 5}px)`;
         }
     });
 
