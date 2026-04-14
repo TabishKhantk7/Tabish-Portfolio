@@ -179,6 +179,17 @@ body {
     align-items: center;
     text-align: center;
     padding-top: 80px;
+    position: relative;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    z-index: -1;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
 }
 .hero-avatar {
     width: 140px; height: 140px;
