@@ -27,12 +27,36 @@
 }
 
 body {
-    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
     color: var(--text-main);
-    font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
-    position: relative;
+    cursor: none;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 12px; height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    transition: width 0.15s ease-out, height 0.15s ease-out, background-color 0.15s ease-out, border 0.15s ease-out;
+}
+.custom-cursor.hover-link {
+    width: 35px; height: 35px;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Hide default pointer on links to preserve the custom cursor illusion */
+a, button, .btn {
+    cursor: none !important;
 }
 
 /* Background Decorations */

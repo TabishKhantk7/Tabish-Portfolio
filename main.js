@@ -19,11 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const fadeElements = document.querySelectorAll('.fade-up');
     fadeElements.forEach(el => observer.observe(el));
 
-    // 2. Interactive Glow & Hero Dots
+    // 2. Interactive Glow, Hero Dots & Custom Cursor
     const avatar = document.querySelector('.hero-avatar');
     const hero = document.querySelector('.hero');
+    const cursor = document.querySelector('.custom-cursor');
+
+    // Add hover effect for clickables
+    if (cursor) {
+        const clickables = document.querySelectorAll('a, button, .btn');
+        clickables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover-link'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover-link'));
+        });
+    }
     
     document.addEventListener('mousemove', (e) => {
+        // Custom Cursor movement
+        if (cursor) {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        }
+
         if (hero) {
             const rect = hero.getBoundingClientRect();
             // Check if mouse is hovering over the hero section
