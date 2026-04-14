@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - Tabish Khan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.1">
+    <script defer src="main.js?v=1.1"></script>
+    <style>
+        .project-hero {
+            padding-top: 150px;
+            padding-bottom: 50px;
+            text-align: center;
+        }
+        .project-img-big {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            margin: 2rem auto;
+            display: block;
+        }
+        .project-desc {
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            color: var(--text-sec);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: left;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(59, 130, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="bg-decor">
+        <div class="glow red"></div>
+        <div class="glow blue"></div>
+        <div class="dots-pattern"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <div class="logo-circle"></div>
+                <span class="logo-text">Tabish</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Back to Home</a>
+            </div>
+            <div class="nav-status">
+                <span class="status-dot"></span>
+                <span>Status: Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="project-hero container fade-up">
+            <h1 class="hero-title" style="font-size:3rem; opacity: 1; animation: none;">Selux App</h1>
+            <div class="project-tags" style="justify-content: center; margin: 1rem 0;">
+                <span>Case Study</span>
+                <span>iPad App</span>
+            </div>
+            <img class="project-img-big" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop" alt="Selux App">
+            
+            <div class="project-desc">
+                <h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.8rem; font-family:var(--font-heading);">Overview</h3>
+                <p>This healthcare application was expertly designed to help employees seamlessly sell specialized hearing aids on demand. The core function involves an intuitive user flow seamlessly guiding through audiometric tests, product selection, and checkout.</p>
+                <br>
+                <h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.8rem; font-family:var(--font-heading);">The Challenge</h3>
+                <p>Translating complex healthcare terminology into a very simple, digestible path for both the operator and the patient was the priority. I utilized clean typography, bright accent colors, and generous white space to create a calming and professional aesthetic.</p>
+            </div>
+            
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer container fade-up">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <p>Tabish Khan © 2024 - Graphic Designer</p>
+            </div>
+            <div class="footer-social">
+                <a href="#">Behance</a>
+                <a href="#">Dribbble</a>
+                <a href="https://www.linkedin.com/in/innovativetabish" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

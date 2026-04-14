@@ -25,10 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add hover effect for clickables
     if (cursor) {
-        const clickables = document.querySelectorAll('a, button, .btn');
+        const clickables = document.querySelectorAll('a, button, .btn, .project-card, .other-card');
         clickables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover-link'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover-link'));
+            
+            // Navigate to project page if clicking a card
+            if (el.classList.contains('project-card') || el.classList.contains('other-card')) {
+                el.addEventListener('click', () => {
+                    window.location.href = 'project.html';
+                });
+            }
         });
     }
     
