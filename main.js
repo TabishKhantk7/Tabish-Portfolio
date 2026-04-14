@@ -19,17 +19,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const fadeElements = document.querySelectorAll('.fade-up');
     fadeElements.forEach(el => observer.observe(el));
 
-    // 2. Interactive Glow (Optional subtle mouse move for hero avatar)
+    // 2. Interactive Glow & Hero Dots
     const avatar = document.querySelector('.hero-avatar');
-    if (avatar) {
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            // Subtle rotation and shadow move on avatar
-            avatar.style.transform = `translate(${x * 10 - 5}px, ${y * 10 - 5}px)`;
-        });
-    }
+    const hero = document.querySelector('.hero');
+    
+    document.addEventListener('mousemove', (e) => {
+        if (hero) {
+            const rect = hero.getBoundingClientRect();
+            // Check if mouse is hovering over the hero section
+            if (e.clientY <= rect.bottom && e.clientY >= rect.top) {
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                hero.style.setProperty('--mouse-x', `${x}px`);
+                hero.style.setProperty('--mouse-y', `${y}px`);
+            }
+        }
+
+        if (avatar) {
+            const vx = e.clientX / window.innerWidth;
+            const vy = e.clientY / window.innerHeight;
+            avatar.style.transform = `translate(${vx * 10 - 5}px, ${vy * 10 - 5}px)`;
+        }
+    });
+
+    // Reset mouse position when leaving window
+    document.addEventListener('mouseleave', () => {
+        if (hero) {
+            hero.style.setProperty('--mouse-x', `-1000px`);
+            hero.style.setProperty('--mouse-y', `-1000px`);
+        }
+    });
 
     // 3. Smooth scrolling for nav links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
