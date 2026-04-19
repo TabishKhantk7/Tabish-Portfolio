@@ -218,6 +218,11 @@
             <img src="Resham%20Rangz%20portfolio%20Growvix.png" alt="Resham Rangz Portfolio" style="max-width: 100%; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
         </div>
 
+        <!-- OneWeekMVPs specific content -->
+        <div id="oneweek-mvps-content" style="display: none; padding: 0 5% 6rem; max-width: 1400px; margin: 0 auto; text-align: center;">
+            <img src="1wmvps%20growvix%20portolio.jpg" alt="OneWeekMVPs Portfolio" style="max-width: 100%; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+        </div>
+
         <!-- Gallery Grid — 18 slots, mixed 4:5 and 9:16 -->
         <div class="portfolio-grid" id="default-grid">
 
@@ -497,6 +502,11 @@
                 if (grid) grid.style.display = 'none';
                 const reshamContent = document.getElementById('resham-rangz-content');
                 if (reshamContent) reshamContent.style.display = 'block';
+            } else if (id === 'oneweek-mvps') {
+                const grid = document.getElementById('default-grid');
+                if (grid) grid.style.display = 'none';
+                const oneweekContent = document.getElementById('oneweek-mvps-content');
+                if (oneweekContent) oneweekContent.style.display = 'block';
             }
         })();
 
