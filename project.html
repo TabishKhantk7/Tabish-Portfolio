@@ -208,8 +208,13 @@
 
         <a href="index.html" class="back-btn">← Back to Home</a>
 
+        <!-- Indori Chai specific content -->
+        <div id="indori-chai-content" style="display: none; padding: 0 5% 6rem; max-width: 1400px; margin: 0 auto; text-align: center;">
+            <img src="Indori%20Chai%20portfolio%20for%20Growvix%20website.jpg" alt="Indori Chai Portfolio" style="max-width: 100%; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+        </div>
+
         <!-- Gallery Grid — 18 slots, mixed 4:5 and 9:16 -->
-        <div class="portfolio-grid">
+        <div class="portfolio-grid" id="default-grid">
 
             <!-- Slot 01 — 4:5 -->
             <div class="slot ratio-4-5 fade-up">
@@ -468,11 +473,20 @@
         (function() {
             const params = new URLSearchParams(window.location.search);
             const name = params.get('name');
+            const id = params.get('id');
+            
             if (name) {
                 const span = document.getElementById('project-name-span');
                 if (span) span.textContent = name;
                 const sub = document.getElementById('project-subtext');
                 if (sub) sub.textContent = 'Portfolio designs for the ' + name + ' project.';
+            }
+
+            if (id === 'indori-chai') {
+                const grid = document.getElementById('default-grid');
+                if (grid) grid.style.display = 'none';
+                const indoriContent = document.getElementById('indori-chai-content');
+                if (indoriContent) indoriContent.style.display = 'block';
             }
         })();
 
