@@ -790,9 +790,35 @@ a, button, .btn {
     .projects-slider .project-card {
         min-width: calc(50% - 1rem); /* 2 in a row on tablet */
     }
+    .images-slider .slot {
+        min-width: calc(50% - 0.75rem); /* 2 in a row on tablet */
+    }
 }
 @media (max-width: 600px) {
     .projects-slider .project-card {
         min-width: 100%; /* 1 in a row on mobile */
     }
+    .images-slider .slot {
+        min-width: calc(100% - 1rem); /* 1 in a row on mobile */
+    }
+}
+
+/* Horizontal slide for 65 images */
+.images-slider {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 2rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.images-slider::-webkit-scrollbar {
+    display: none;
+}
+.images-slider .slot {
+    min-width: calc(33.333% - 1rem);
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    margin-bottom: 0; /* Reset masonry bottom margin */
 }
