@@ -230,15 +230,9 @@
 
         <!-- Story/Post specific content -->
         <div id="story-post-content" style="display: none; width: 100%; padding: 0 5% 6rem; max-width: 1400px; margin: 0 auto; position: relative;">
-            <button class="slider-arrow slider-prev" id="story-post-prev">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            </button>
             <div class="images-slider" id="story-post-grid">
                 <!-- Dynamically populated via JS -->
             </div>
-            <button class="slider-arrow slider-next" id="story-post-next">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
         </div>
 
         <!-- Gallery Grid — 18 slots, mixed 4:5 and 9:16 -->
@@ -489,7 +483,11 @@
                 <p class="section-desc centered">Explore my projects to experience innovative design and uncover creative solutions.</p>
             </div>
             
-            <div class="projects-slider">
+            <div style="position: relative;">
+                <button class="slider-arrow slider-prev" id="projects-slider-prev">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="projects-slider" id="projects-slider-container">
 
                 <!-- Project 1 -->
                 <div class="project-card style-warning" data-project="story-post" data-project-name="Story / Post">
@@ -580,7 +578,29 @@
                 </div>
 
             </div>
+                <button class="slider-arrow slider-next" id="projects-slider-next">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
         </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const pBtn = document.getElementById('projects-slider-prev');
+                const nBtn = document.getElementById('projects-slider-next');
+                const pSlider = document.getElementById('projects-slider-container');
+                if (pBtn && nBtn && pSlider) {
+                    pBtn.addEventListener('click', () => {
+                        const shift = pSlider.clientWidth * 0.8;
+                        pSlider.scrollBy({ left: -shift, behavior: 'smooth' });
+                    });
+                    nBtn.addEventListener('click', () => {
+                        const shift = pSlider.clientWidth * 0.8;
+                        pSlider.scrollBy({ left: shift, behavior: 'smooth' });
+                    });
+                }
+            });
+        </script>
 
     <footer class="footer container fade-up">
         <div class="footer-inner">
@@ -652,19 +672,6 @@
                     });
                     storyPostGrid.innerHTML = html;
 
-                    // Setup Arrow Navigation
-                    const prevBtn = document.getElementById('story-post-prev');
-                    const nextBtn = document.getElementById('story-post-next');
-                    if (prevBtn && nextBtn) {
-                        prevBtn.addEventListener('click', () => {
-                            const scrollAmt = storyPostGrid.clientWidth * 0.8;
-                            storyPostGrid.scrollBy({ left: -scrollAmt, behavior: 'smooth' });
-                        });
-                        nextBtn.addEventListener('click', () => {
-                            const scrollAmt = storyPostGrid.clientWidth * 0.8;
-                            storyPostGrid.scrollBy({ left: scrollAmt, behavior: 'smooth' });
-                        });
-                    }
                 }
             }
         })();
