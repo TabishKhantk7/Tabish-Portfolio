@@ -228,6 +228,13 @@
             <img src="Thread%20and%20Tees%20portfolio%20Growvix.png" alt="Thread & Tees Portfolio" style="max-width: 100%; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
         </div>
 
+        <!-- Print Media specific content -->
+        <div id="print-media-content" style="display: none; width: 100%;">
+            <div class="portfolio-grid" id="print-media-grid">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
         <!-- Gallery Grid — 18 slots, mixed 4:5 and 9:16 -->
         <div class="portfolio-grid" id="default-grid">
 
@@ -517,6 +524,29 @@
                 if (grid) grid.style.display = 'none';
                 const threadTeesContent = document.getElementById('thread-and-tees-content');
                 if (threadTeesContent) threadTeesContent.style.display = 'block';
+            } else if (id === 'print-media') {
+                const grid = document.getElementById('default-grid');
+                if (grid) grid.style.display = 'none';
+                const printMediaContent = document.getElementById('print-media-content');
+                if (printMediaContent) printMediaContent.style.display = 'block';
+
+                const printMediaGrid = document.getElementById('print-media-grid');
+                if (printMediaGrid && printMediaGrid.children.length === 0) {
+                    const images = ["P (1).jpg","P (1).png","P (2).jpg","P (2).png","P (3).jpg","P (3).png","P (4).jpg","P (4).png","P (5).jpg","P (5).png","P (6).jpg","P (6).png","P (7).jpg","P (7).png","P (8).jpg","P (8).png","P (9).jpg","P (9).png","P (10).jpg","P (10).png","P (11).jpg","P (11).png","P (12).jpg","P (12).png","P (13).jpg","P (13).png","P (14).png","P (15).png","P (16).png","P (17).png","P (18).png","P (19).png","P (20).png","P (21).png","P (22).png","P (23).png","P (24).png","P (25).png","P (26).png","P (27).png","P (28).png","P (29).png","P (30).png","P (31).png","P (32).png","P (33).png","P (34).png","P (35).png","P (36).png","P (37).png","P (38).png","P (39).png","P (40).png","P (41).png","P (42).png","P (43).png","P (44).png","P (45).png","P (46).png","P (47).png","P (48).png","P (49).png","P (50).png","P (51).png","P (52).png"];
+                    
+                    let html = '';
+                    images.forEach((img, idx) => {
+                        let num = String(idx + 1).padStart(2, '0');
+                        html += `
+                        <div class="slot ratio-9-16 fade-up visible" style="opacity:1;transform:translateY(0);">
+                            <div class="slot-inner">
+                                <img class="slot-img loaded" src="Images for Portfolio Stories/${encodeURIComponent(img)}" alt="Design ${num}" loading="lazy" style="opacity:1;">
+                                <div class="slot-overlay"><span class="slot-overlay-text">Design ${num}</span></div>
+                            </div>
+                        </div>`;
+                    });
+                    printMediaGrid.innerHTML = html;
+                }
             }
         })();
 
