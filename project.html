@@ -3,51 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Details - Tabish Khan</title>
+    <title id="page-title">Portfolio - Tabish Khan | Graphic Designer</title>
+    <meta name="description" content="Portfolio gallery of Tabish Khan — Graphic Designer showcasing branding, UI/UX, and visual design work.">
+    <script>
+        // Read project name from URL immediately (before DOM loads) for title
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
+            if (name) document.title = name + ' — Tabish Khan';
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=1.1">
     <script defer src="main.js?v=1.1"></script>
     <style>
-        .project-hero {
-            padding-top: 150px;
-            padding-bottom: 50px;
+        /* ── Page header ─────────────────────────────────────── */
+        .portfolio-header {
+            padding-top: 140px;
+            padding-bottom: 3rem;
             text-align: center;
         }
-        .project-img-big {
+        .portfolio-header h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .portfolio-header h1 span {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradientPan 3s linear infinite;
+        }
+        .portfolio-header p {
+            color: var(--text-sec);
+            font-size: 1.1rem;
+        }
+
+        /* ── Masonry grid ───────────────────────────────────── */
+        .portfolio-grid {
+            column-count: 3;
+            column-gap: 16px;
+            padding: 0 5% 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 900px)  { .portfolio-grid { column-count: 2; } }
+        @media (max-width: 540px)  { .portfolio-grid { column-count: 1; } }
+
+        /* ── Slot card ──────────────────────────────────────── */
+        .slot {
+            break-inside: avoid;
+            margin-bottom: 16px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: #0f0f12;
+            border: 1.5px dashed rgba(255,255,255,0.12);
+            cursor: pointer;
+            transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .slot:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Aspect ratios */
+        .slot.ratio-4-5  .slot-inner { aspect-ratio: 4 / 5; }
+        .slot.ratio-9-16 .slot-inner { aspect-ratio: 9 / 16; }
+
+        .slot-inner {
             width: 100%;
-            max-width: 900px;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            margin: 2rem auto;
+            position: relative;
             display: block;
         }
-        .project-desc {
-            max-width: 700px;
-            margin: 0 auto 3rem auto;
-            color: var(--text-sec);
-            font-size: 1.2rem;
-            line-height: 1.8;
-            text-align: left;
+
+        /* Image (hidden when src="") */
+        .slot-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 14px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
+        .slot-img.loaded {
+            opacity: 1;
+        }
+
+        /* Placeholder shown when no image */
+        .slot-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: opacity 0.4s ease;
+        }
+        .slot-placeholder svg {
+            opacity: 0.25;
+        }
+        .slot-num {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .slot-ratio-badge {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.15);
+            font-family: var(--font-heading);
+            letter-spacing: 1px;
+        }
+
+        /* Hide placeholder when image is loaded */
+        .slot-img.loaded ~ .slot-placeholder {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Hover overlay on loaded images */
+        .slot-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            border-radius: 14px;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.2rem;
+        }
+        .slot:hover .slot-overlay {
+            opacity: 1;
+        }
+        .slot-overlay-text {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Back button */
         .back-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            margin-top: 2rem;
+            gap: 8px;
+            margin: 0 5% 3rem;
             color: var(--accent-blue);
             text-decoration: none;
             font-weight: 500;
-            padding: 10px 20px;
+            font-size: 0.9rem;
+            padding: 8px 18px;
             border-radius: 30px;
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(59,130,246,0.1);
             transition: all 0.3s ease;
         }
         .back-btn:hover {
-            background: rgba(59, 130, 246, 0.2);
-            transform: translateX(-5px);
+            background: rgba(59,130,246,0.2);
+            transform: translateX(-4px);
         }
     </style>
 </head>
@@ -67,7 +190,7 @@
                 <span class="logo-text">Tabish</span>
             </div>
             <div class="nav-links">
-                <a href="index.html">Back to Home</a>
+                <a href="index.html">← Home</a>
             </div>
             <div class="nav-status">
                 <span class="status-dot"></span>
@@ -77,24 +200,253 @@
     </nav>
 
     <main>
-        <section class="project-hero container fade-up">
-            <h1 class="hero-title" style="font-size:3rem; opacity: 1; animation: none;">Selux App</h1>
-            <div class="project-tags" style="justify-content: center; margin: 1rem 0;">
-                <span>Case Study</span>
-                <span>iPad App</span>
-            </div>
-            <img class="project-img-big" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop" alt="Selux App">
-            
-            <div class="project-desc">
-                <h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.8rem; font-family:var(--font-heading);">Overview</h3>
-                <p>This healthcare application was expertly designed to help employees seamlessly sell specialized hearing aids on demand. The core function involves an intuitive user flow seamlessly guiding through audiometric tests, product selection, and checkout.</p>
-                <br>
-                <h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.8rem; font-family:var(--font-heading);">The Challenge</h3>
-                <p>Translating complex healthcare terminology into a very simple, digestible path for both the operator and the patient was the priority. I utilized clean typography, bright accent colors, and generous white space to create a calming and professional aesthetic.</p>
-            </div>
-            
-            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        <!-- Header -->
+        <section class="portfolio-header container fade-up">
+            <h1 id="project-heading">My <span id="project-name-span">Portfolio</span></h1>
+            <p id="project-subtext">A visual journey through branding, UI/UX, and creative design work.</p>
         </section>
+
+        <a href="index.html" class="back-btn">← Back to Home</a>
+
+        <!-- Gallery Grid — 18 slots, mixed 4:5 and 9:16 -->
+        <div class="portfolio-grid">
+
+            <!-- Slot 01 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <!-- Replace "" with your image path when ready -->
+                    <img class="slot-img" src="" alt="Design 01" data-slot="01">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 01</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 01</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 02 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 02" data-slot="02">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 02</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 02</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 03 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 03" data-slot="03">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 03</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 03</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 04 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 04" data-slot="04">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 04</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 04</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 05 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 05" data-slot="05">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 05</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 05</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 06 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 06" data-slot="06">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 06</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 06</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 07 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 07" data-slot="07">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 07</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 07</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 08 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 08" data-slot="08">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 08</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 08</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 09 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 09" data-slot="09">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 09</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 09</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 10 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 10" data-slot="10">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 10</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 10</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 11 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 11" data-slot="11">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 11</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 11</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 12 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 12" data-slot="12">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 12</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 12</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 13 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 13" data-slot="13">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 13</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 13</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 14 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 14" data-slot="14">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 14</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 14</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 15 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 15" data-slot="15">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 15</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 15</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 16 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 16" data-slot="16">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 16</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 16</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 17 — 9:16 -->
+            <div class="slot ratio-9-16 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 17" data-slot="17">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 17</span>
+                        <span class="slot-ratio-badge">9 : 16</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 17</span></div>
+                </div>
+            </div>
+
+            <!-- Slot 18 — 4:5 -->
+            <div class="slot ratio-4-5 fade-up">
+                <div class="slot-inner">
+                    <img class="slot-img" src="" alt="Design 18" data-slot="18">
+                    <div class="slot-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span class="slot-num">Slot 18</span>
+                        <span class="slot-ratio-badge">4 : 5</span>
+                    </div>
+                    <div class="slot-overlay"><span class="slot-overlay-text">Design 18</span></div>
+                </div>
+            </div>
+
+        </div><!-- /portfolio-grid -->
     </main>
 
     <!-- Footer -->
@@ -110,5 +462,28 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // ── Dynamic project title from URL ──────────────────────────
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
+            if (name) {
+                const span = document.getElementById('project-name-span');
+                if (span) span.textContent = name;
+                const sub = document.getElementById('project-subtext');
+                if (sub) sub.textContent = 'Portfolio designs for the ' + name + ' project.';
+            }
+        })();
+
+        // ── Auto-detect loaded images ───────────────────────────────
+        document.querySelectorAll('.slot-img').forEach(img => {
+            const activate = () => {
+                if (img.src && img.naturalWidth > 0) img.classList.add('loaded');
+            };
+            img.addEventListener('load', activate);
+            activate();
+        });
+    </script>
 </body>
 </html>
