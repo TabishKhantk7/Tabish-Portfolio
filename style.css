@@ -526,6 +526,23 @@ a, button, .btn {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
 }
+.projects-slider {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 2rem;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+}
+.projects-slider::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari/Webkit */
+}
+.projects-slider .project-card {
+    min-width: calc(33.333% - 1.34rem); /* 3 cards visible */
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
 .project-card {
     background: #111;
     border-radius: 16px;
@@ -766,5 +783,16 @@ a, button, .btn {
     }
     .contact-left {
         padding: 2rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .projects-slider .project-card {
+        min-width: calc(50% - 1rem); /* 2 in a row on tablet */
+    }
+}
+@media (max-width: 600px) {
+    .projects-slider .project-card {
+        min-width: 100%; /* 1 in a row on mobile */
     }
 }
