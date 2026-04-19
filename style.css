@@ -539,7 +539,7 @@ a, button, .btn {
     display: none; /* Hide scrollbar Chrome/Safari/Webkit */
 }
 .projects-slider .project-card {
-    min-width: calc(33.333% - 1.34rem); /* 3 cards visible */
+    min-width: calc((100% - 4rem) / 3); /* exactly 3 cards visible with two 2rem gaps */
     scroll-snap-align: start;
     flex-shrink: 0;
 }
@@ -786,12 +786,12 @@ a, button, .btn {
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .projects-slider .project-card {
-        min-width: calc(50% - 1rem); /* 2 in a row on tablet */
+        min-width: calc((100% - 2rem) / 2); /* 2 in a row on small tablet */
     }
     .images-slider .slot {
-        min-width: calc(50% - 0.75rem); /* 2 in a row on tablet */
+        min-width: calc((100% - 1.5rem) / 2); /* 2 in a row on small tablet */
     }
 }
 @media (max-width: 600px) {
@@ -817,7 +817,7 @@ a, button, .btn {
     display: none;
 }
 .images-slider .slot {
-    min-width: calc(33.333% - 1rem);
+    min-width: calc((100% - 3rem) / 3); /* exactly 3 items with two 1.5rem gaps */
     scroll-snap-align: start;
     flex-shrink: 0;
     margin-bottom: 0; /* Reset masonry bottom margin */
